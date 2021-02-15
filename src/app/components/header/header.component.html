@@ -1,0 +1,125 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Angular Blog</a>
+
+    <ng-container *ngIf="isLogged; else notAuthorized">
+
+      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#postModal">Add
+          Post</button>
+        <button type="button" class="btn btn-warning">{{ currentUser.username}}</button>
+        <button type="button" class="btn btn-outline-warning" (click)="singOut()">Sing Out</button>
+      </div>
+    </ng-container>
+    <ng-template #notAuthorized>
+
+      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#singInModal">Sing
+          In</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#singUpModal">Sing
+          Up</button>
+      </div>
+
+    </ng-template>
+  </div>
+</nav>
+
+<app-posts [currentUser]="currentUser"></app-posts>
+
+<!-- Modal -->
+<div class="modal fade" id="singInModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sing In</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form novalidate>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="useremail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="useremail" [(ngModel)]="emailField" name="emailField">
+          </div>
+
+          <div class="mb-3">
+            <label for="userpassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="userpassword" [(ngModel)]="passwordField"
+              name="passwordField">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="singInFormReset()"
+            data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="singIn($event)" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="singUpModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sing Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="newUserName" class="form-label">Username</label>
+            <input type="text" class="form-control" id="newUserName" [(ngModel)]="newUserNameField"
+              name="newUserNameField">
+          </div>
+          <div class="mb-3">
+            <label for="newUserEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="newUserEmail" [(ngModel)]="newUserEmailField"
+              name="newUserEmailField">
+          </div>
+          <div class="mb-3">
+            <label for="newUserPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="newUserPassword" [(ngModel)]="newUserPasswordField"
+              name="newUserPasswordField">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addUser()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form novalidate>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="newPostTitle" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="postTitle" [(ngModel)]="newPostTopic" name="newPostTopic">
+          </div>
+          <div class="mb-3">
+            <label for="newPostMessage" class="form-label">Text:</label>
+
+            <textarea class="form-control" id="newPostMessage" [(ngModel)]="newPostMessage"
+              name="newPostMessage"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="addNewPost()">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

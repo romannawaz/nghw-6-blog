@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="card mt-4" *ngFor="let post of POSTS">
+    <div class="card-body">
+      <h5 class="card-title">{{ post.topic }}</h5>
+      <div class="card-subtitle mb-2 text-muted d-flex justify-content-between">posted By: {{ post.postedBy }} <span
+          class="post-date">
+          <i class="far fa-clock"></i> {{ post.date | date:'HH:mm, dd.MM.YYYY' }}
+        </span></div>
+      <p class="card-text">{{ post.message }} </p>
+
+      <div class="d-flex edit-buttons"
+        *ngIf="currentUser && (currentUser.username == 'admin' || post.postedBy == currentUser.username)">
+        <div class="btn-group ms-auto">
+          <button type="button" class="btn btn-warning" (click)="editPost(post.id)" data-bs-toggle="modal"
+            data-bs-target="#editPostModal">Edit</button>
+          <button type="button" class="btn btn-danger" (click)="deletePost(post.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editPostModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form novalidate>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editedPostTitle" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="editedPostTitle" [(ngModel)]="postTopic" name="postTopic">
+          </div>
+          <div class="mb-3">
+            <label for="editedPostMessage" class="form-label">Text:</label>
+
+            <textarea class="form-control" id="editedPostMessage" [(ngModel)]="postMessage"
+              name="postMessage"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveChangesPost()">Save
+            Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
